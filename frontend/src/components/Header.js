@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navbar, Nav, Container, Row, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, Container, Row, NavDropdown, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import {logout} from '../actions/userActions'
 import logoemp from '../assets/logoemp.png'
@@ -31,11 +31,19 @@ function Header() {
                             navbarScroll
                         >
                             <Nav.Link href="/">Home</Nav.Link>
-                            {/* <LinkContainer to="/cart">
+
+                            {userInfo ? (
+                                <LinkContainer to='/dashboard'>
                                 <Nav.Link>
-                                    <i className="fas fa-shopping-cart"></i>Cart
+                                    Dashboard
                                 </Nav.Link>
-                            </LinkContainer> */}
+                                
+                            </LinkContainer>
+
+                            ) : ""}
+                            
+                            
+
                         </Nav>
                         <Nav
                             className="ms-auto"
