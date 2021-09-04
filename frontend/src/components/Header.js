@@ -19,7 +19,7 @@ function Header() {
     return (
         <header>
             <Navbar className="main-nav" variant='dark' expand="lg">
-                <Container>
+                <Container fluid>
                     <LinkContainer to="/">
                         <Navbar.Brand href="/"><img src={logoemp} className="logo" alt="PassBit" /> </Navbar.Brand>
                     </LinkContainer>
@@ -30,10 +30,15 @@ function Header() {
                             style={{ maxHeight: "100px" }}
                             navbarScroll
                         >
-                            <Nav.Link href="/">Home</Nav.Link>
+                            <LinkContainer to='/' exact>
+                                <Nav.Link>
+                                    Home
+                                </Nav.Link>
+                                
+                            </LinkContainer>
 
                             {userInfo ? (
-                                <LinkContainer to='/dashboard'>
+                            <LinkContainer to='/dashboard' exact> 
                                 <Nav.Link>
                                     Dashboard
                                 </Nav.Link>
