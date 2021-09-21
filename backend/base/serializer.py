@@ -1,9 +1,9 @@
+from os import read
 from re import L
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken, Token
-from .models import Product, Order
-
+from .models import Org, AppPass, PassGroup
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
@@ -40,7 +40,25 @@ class UserSerializerWithToken(UserSerializer):
         return str(token.access_token)
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class OrgSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = Org
         fields = '__all__'
+
+class PassGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PassGroup
+        fields = '__all__'
+
+class PasswordSerializer(serializers.ModelSerializer):
+
+    # group = PassGroupSerializer(read_only=True)
+    
+
+    class Meta:
+        model = AppPass
+        fields = ('id','group', 'name', 'url', 'password', 'description', 'note', 'user') 
+
+
+
+
