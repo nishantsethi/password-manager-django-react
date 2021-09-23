@@ -6,6 +6,7 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import ViewPassword from "./screens/ViewPassword";
 
 import DashboardScreen from "./screens/DashboardScreen";
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/register/' component={RegisterScreen} />
           <Route path='/profile/' component={ProfileScreen} />
           <Route path='/dashboard/' component={DashboardScreen} />
+
         </Container>
       </main>
       <Footer />

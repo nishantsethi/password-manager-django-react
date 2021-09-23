@@ -18,6 +18,7 @@ def AppPassView(request):
     user = request.user
     passes = AppPass.objects.filter(user=user)
     data = PasswordSerializer(passes, many=True).data
+
     return Response(data)
 
 
@@ -61,7 +62,7 @@ def getPass(request, pk):
 
         return Response(passw, status=status.HTTP_200_OK)
     except:
-        return Response("Unauthorized user", status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"error":"Unauthorized user"}, status=status.HTTP_401_UNAUTHORIZED)
 
     
 

@@ -2,13 +2,17 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {composeWithDevTools}  from 'redux-devtools-extension'
 import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer } from './reducers/userReducers'
+import {createPasswordReducer, passwordListReducer, passwordDetailReducer} from './reducers/passwordReducers'
 
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails : userDetailsReducer,
-    userUpdateProfile: userUpdateProfileReducer
+    userUpdateProfile: userUpdateProfileReducer,
+    createPassword: createPasswordReducer,
+    listPassword: passwordListReducer,
+    passwordDetail: passwordDetailReducer,
 
 })
 
