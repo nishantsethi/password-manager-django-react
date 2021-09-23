@@ -44,7 +44,7 @@ const Dashboard = ({ history,match }) => {
                             component={CreatePass}
                             exact
                         />
-                        <Route path={`${match.url}/pass/view/:id?`} component={ViewPassword} />
+                        <Route path={`${match.url}/pass/view/:id`} component={ViewPassword} />
                     </Container>
                 </Col>
             </Row>
