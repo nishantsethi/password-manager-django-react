@@ -37,9 +37,9 @@ const ViewPassword = ({ match }) => {
         );
     };
 
-    // useEffect(() => {
-    //     dispatch(listPasswordDetails(match.params.id));
-    // }, [dispatch, password]);
+    useEffect(() => {
+        dispatch(listPasswordDetails(match.params.id));
+    }, [dispatch]);
 
     return (
         <div>
@@ -115,6 +115,54 @@ const ViewPassword = ({ match }) => {
                                     </CopyToClipboard>
                                 </Col>
                             </Col>
+                        </Form.Group>
+                        <Form.Group
+                            as={Row}
+                            className="mb-3"
+                            controlId="formPlaintextEmail"
+                        >
+                            <Form.Label column sm="2">
+                                URL
+                            </Form.Label>
+                            <Col sm="10">
+                                <Form.Control
+                                    plaintext
+                                    readOnly
+                                    defaultValue={password.url}
+                                />
+                            </Col>
+                            <Form.Group
+                                as={Row}
+                                className="mb-3"
+                                controlId="formPlaintextEmail"
+                            >
+                                <Form.Label column sm="2">
+                                    Description
+                                </Form.Label>
+                                <Col sm="10">
+                                    <Form.Control
+                                        plaintext
+                                        readOnly
+                                        defaultValue={password.description}
+                                    />
+                                </Col>
+                            </Form.Group>
+                            <Form.Group
+                                as={Row}
+                                className="mb-3"
+                                controlId="formPlaintextEmail"
+                            >
+                                <Form.Label column sm="2">
+                                    Note
+                                </Form.Label>
+                                <Col sm="10">
+                                    <Form.Control
+                                        plaintext
+                                        readOnly
+                                        defaultValue={password.note}
+                                    />
+                                </Col>
+                            </Form.Group>
                         </Form.Group>
                     </Form>
                 </Row>
