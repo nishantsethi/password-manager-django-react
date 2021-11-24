@@ -131,6 +131,67 @@ def createPass(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updatePass(request, pk):
+    """
+    Update a Passwords
+    """
+
+        
+    try:
+        data = request.data
+        apppass = AppPass.objects.get(id=pk, user=request.user)
+
+        print(apppass)
+
+        
+
+        
+
+        print(data)
+
+        if 'name' in data:
+            apppass.name = data['name']
+
+        if 'url' in  data:
+            apppass.url = data['url']
+        
+        if 'password' in data:
+            apppass.password = eu.encrypt(data['password'])
+        
+        if 'description' in data:
+            apppass.description = data['description']
+        
+        if 'note' in data:
+            apppass.note = data['note']
+
+        apppass.save()
+
+        serializer = PasswordSerializer(apppass, many=False)
+        serializer = serializer.data
+
+        
+
+        return Response(serializer, status=status.HTTP_200_OK)
+    except:
+        return Response({"error":"Unauthorized user"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def deletePass(request, pk):
+
+    try:
+        apppass = AppPass.objects.get(id=pk, user=request.user)
+        apppass.delete()
+
+        return Response("Password Deleted")
+    except:
+        return Response({"error":"Unauthorized user"}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 @api_view(['POST'])
 def createGroup(request):

@@ -35,6 +35,7 @@ class AppPass(models.Model):
     note = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User,
                              on_delete=models.SET_NULL, null=True)
+    
 
     def __str__(self):
         return self.name

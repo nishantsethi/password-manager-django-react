@@ -13,6 +13,14 @@ import {
     PASSWORD_DETAILS_SUCCESS,
     PASSWORD_DETAILS_FAIL,
 
+    PASSWORD_UPDATE_REQUEST,
+    PASSWORD_UPDATE_SUCCESS,
+    PASSWORD_UPDATE_FAIL,
+
+    PASSWORD_DELETE_REQUEST,
+    PASSWORD_DELETE_SUCCESS,
+    PASSWORD_DELETE_FAIL,
+
 } from "../constants/passwordConstants";
 
 
@@ -124,4 +132,84 @@ export const listPasswordDetails = (id) => async (dispatch, getState) => {
         })
     }
 
+}
+
+export const updatePassword = (id, name, url,password, description, note) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: PASSWORD_UPDATE_REQUEST
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const {data} = await axios.put(
+            `/api/passwords/update/pass/${id}`,
+            {'group': '1', 'name':name, 'password':password, 'url':url, 'description':description, 'note':note},
+            config
+        )
+
+        dispatch({
+            type: PASSWORD_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+
+    } catch(error) {
+        
+        dispatch({
+            type: PASSWORD_UPDATE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+
+}
+
+
+export const deletePassword = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: PASSWORD_DELETE_REQUEST
+        })
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const {data} = await axios.delete(
+            `/api/passwords/delete/pass/${id}`,
+            config
+        )
+
+        dispatch({
+            type: PASSWORD_DELETE_SUCCESS,
+        })
+
+
+    } catch(error) {
+        
+        dispatch({
+            type: PASSWORD_DELETE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
 }

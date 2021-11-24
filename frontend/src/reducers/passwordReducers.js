@@ -11,6 +11,15 @@ import {
     PASSWORD_DETAILS_REQUEST,
     PASSWORD_DETAILS_SUCCESS,
     PASSWORD_DETAILS_FAIL,
+
+
+    PASSWORD_UPDATE_REQUEST,
+    PASSWORD_UPDATE_SUCCESS,
+    PASSWORD_UPDATE_FAIL,
+
+    PASSWORD_DELETE_REQUEST,
+    PASSWORD_DELETE_SUCCESS,
+    PASSWORD_DELETE_FAIL,
 } from "../constants/passwordConstants";
 
 export const createPasswordReducer = (state = {}, action) => {
@@ -61,3 +70,37 @@ export const passwordDetailReducer = (state={password:{}}, action) => {
             return state
     }
 }
+
+
+export const updatePasswordReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PASSWORD_UPDATE_REQUEST:
+            return { loading: true };
+
+        case PASSWORD_UPDATE_SUCCESS:
+            return { loading: false, success: true, password: action.payload };
+
+        case PASSWORD_UPDATE_FAIL:
+            return { loading: false, error: action.payload };
+
+        default:
+            return state;
+    }
+};
+
+
+export const deletePasswordReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PASSWORD_DELETE_REQUEST:
+            return { loading: true };
+
+        case PASSWORD_DELETE_SUCCESS:
+            return { loading: false, success: true };
+
+        case PASSWORD_DELETE_FAIL:
+            return { loading: false, error: action.payload };
+
+        default:
+            return state;
+    }
+};
