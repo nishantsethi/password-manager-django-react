@@ -21,6 +21,7 @@ class PassGroup(models.Model):
     note = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User,
                              on_delete=models.SET_NULL, null=True)
+    sub_group = models.ManyToManyField('self', related_name='sub_groups',blank=True, symmetrical=False)
 
     def __str__(self):
         return self.name
@@ -35,6 +36,7 @@ class AppPass(models.Model):
     note = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User,
                              on_delete=models.SET_NULL, null=True)
+    shared_with = models.ManyToManyField(User,related_name='shared_with',blank=True)
     
 
     def __str__(self):

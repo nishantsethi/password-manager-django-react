@@ -57,8 +57,6 @@ class PasswordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AppPass
-        fields = ('id','group', 'name', 'url', 'password', 'description', 'note', 'user') 
-
-
+        fields = ('id','group', 'name', 'url', 'password', 'description', 'note', 'user', 'shared_with') 
 
 

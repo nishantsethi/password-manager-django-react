@@ -7,6 +7,7 @@ from base.models import Org, AppPass, PassGroup
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from base.encrypter import encryption_util as eu
+from django.db.models import Q
 
 
 @api_view(['GET'])
@@ -17,6 +18,19 @@ def AppPassView(request):
     """
     user = request.user
     passes = AppPass.objects.filter(user=user)
+    data = PasswordSerializer(passes, many=True).data
+
+    return Response(data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def GetAllSharedWithPassView(request):
+    """
+    Get list of all passwords shared with a user
+    """
+    user = request.user
+    passes = AppPass.objects.filter(shared_with=request.user)
     data = PasswordSerializer(passes, many=True).data
 
     return Response(data)
@@ -39,11 +53,12 @@ def getPass(request, pk):
     Get Single Password
     """
 
-
-    
-
     try:
-        apppass = AppPass.objects.get(id=pk, user=request.user)
+        try:
+            apppass = AppPass.objects.get( (Q(id=pk) & Q(user=request.user)) | (Q(id=pk) & Q(shared_with=request.user)) )
+        except AppPass.MultipleObjectsReturned:
+            apppass = AppPass.objects.get(Q(id=pk) & Q(user=request.user))
+        
 
 
         serializer = PasswordSerializer(apppass)
@@ -57,16 +72,15 @@ def getPass(request, pk):
         'description':serializer['description'],
         'note':serializer['note'],
         'group':serializer['group'],
-        'user':serializer['user']
+        'user':serializer['user'],
+        'shared_with':serializer['shared_with']
     }
 
         return Response(passw, status=status.HTTP_200_OK)
-    except:
-        return Response({"error":"Unauthorized user"}, status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as err:
+        return Response({"error":err}, status=status.HTTP_401_UNAUTHORIZED)
 
-    
 
-    return Response(passw)
 
 
 @api_view(['GET'])

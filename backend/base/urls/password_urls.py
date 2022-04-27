@@ -3,6 +3,7 @@ from base.views import password_views as views
 
 urlpatterns = [
     path('apppass/', views.AppPassView, name='AppPass'),
+    path('sharedpass/',views.GetAllSharedWithPassView, name='GetAllSharedPass'),
     path('passgroups/', views.PassGroupsView, name='Passgroups'),
     path('get/pass/<str:pk>', views.getPass, name='GetPass'),
     path('update/pass/<str:pk>', views.updatePass, name='UpdatePass'),
